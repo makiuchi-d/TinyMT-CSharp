@@ -2,7 +2,7 @@ using System;
 
 namespace TinyMT
 {
-    /// <summary>Tiny Mersenne Twister pseudo-random number generator</summary>
+    /// <summary>Tiny Mersenne Twister pseudo-random number generator.</summary>
     /// <remarks>
     /// This class is compatible with System.Random.
     /// So, it can be easly replaced.
@@ -29,14 +29,14 @@ namespace TinyMT
         public uint mat2 = 0xffd0fff4;
         public ulong tmat = 0x58d02ffeffbfffbc;
 
-        /// <summary>Initializes a new instance with a default seed.</summary>
+        /// <summary>Initializes a new instance with default seed and parameters.</summary>
         /// <remarks>Compatible with System.Random.</remarks>
         public Random()
         {
             init((ulong)Environment.TickCount);
         }
 
-        /// <summary>Initializes an instance with the specified seed.</summary>
+        /// <summary>Initializes an instance with the specified seed and default parmeters.</summary>
         /// <param name="seed">The seed value of pseudo-random number sequence. If a negative value is specified, the absolute value is used.</param>
         /// <remarks>Compatible with System.Random.</remarks>
         public Random(int seed)
@@ -44,16 +44,15 @@ namespace TinyMT
             init((seed >= 0) ? (ulong)seed : (ulong)(-seed));
         }
 
-        /// <summary>Initializes a new instance with the specified seed.</summary>
-        /// <param name="seed">Ther seed value of pseudo-random number sequence.</param>
-        /// <remarks>Parameters (mat1, mat2 and tmat) are initialized to default values.</remarks>
+        /// <summary>Initializes a new instance with the specified seed and default parameters.</summary>
+        /// <param name="seed">The seed value of pseudo-random number sequence.</param>
         public Random(ulong seed)
         {
             init(seed);
         }
 
-        /// <summary>Initializes a new instance with the seed and parameters.</summary>
-        /// <param name="seed">Ther seed value of pseudo-random number sequence.</param>
+        /// <summary>Initializes a new instance with the specified seed and parameters.</summary>
+        /// <param name="seed">The seed value of pseudo-random number sequence.</param>
         /// <param name="mat1">State transition parameter.</param>
         /// <param name="mat2">State transition parameter.</param>
         /// <param name="tmat">Tempering parameter.</param>
@@ -65,9 +64,8 @@ namespace TinyMT
             init(seed);
         }
 
-        /// <summary>Initializes a new instance with an array of integers used as seeds.</summary>
+        /// <summary>Initializes a new instance with an array of integers used as seeds, and default parameters.</summary>
         /// <param name="initKey">The array of 64-bit integers, used as seed.</param>
-        /// <remarks>Parameters (mat1, mat2 and tmat) are initialized to default values.</remarks>
         public Random(ulong[] initKey)
         {
             initByArray(initKey);
@@ -86,13 +84,13 @@ namespace TinyMT
             initByArray(initKey);
         }
 
-        /// <summary>Always returns 127</summary>
-        /// <returns>127</returns>
+        /// <summary>Always returns 127.</summary>
+        /// <returns>127.</returns>
         /// <remarks>Corresponds to the original function tinymt64_get_mexp.</remarks>
         public int GetMExp() => MEXP;
 
-        /// <summary>Returns a non-negative random integer</summary>
-        /// <returns>A random integer (0 &lt;= ret &lt; int.MaxValue).</returns>
+        /// <summary>Returns a non-negative random integer.</summary>
+        /// <returns>A random integer (0 &lt;= ret &lt;= int.MaxValue).</returns>
         /// <remarks>Compatible with System.Random.</remarks>
         public virtual int Next()
         {
@@ -100,7 +98,7 @@ namespace TinyMT
         }
 
         /// <summary>Returns a non-negative random integer that is less than the specified maximum.</summary>
-        /// <param name="maxValue">The exclusive upper bound of the generated random value. this must be greater than or equal to 0</param>
+        /// <param name="maxValue">The exclusive upper bound of the generated random value. this must be greater than or equal to 0.</param>
         /// <returns>A random integer (0 &lt;= ret &lt; <paramref name="maxValue" />).</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxValue" /> is less than 0.</exception>
         /// <remarks>Compatible with System.Random.</remarks>
@@ -116,7 +114,7 @@ namespace TinyMT
 
         /// <summary>Returns a random integer that is within a specified range.</summary>
         /// <param name="minValue">The inclusive lower bound of the generated random value.</param>
-        /// <param name="maxValue">The exclusive upper bound of the generated random value. this must be greater than or equal to <paramref name="minValue" /></param>
+        /// <param name="maxValue">The exclusive upper bound of the generated random value. this must be greater than or equal to <paramref name="minValue" />.</param>
         /// <returns>A random integer (<paramref name="minValue" /> &lt;= ret &lt; <paramref name="maxValue" />).</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="minValue" /> is greater than <paramref name="maxValue" />.</exception>
         /// <remarks>Compatible with System.Random.</remarks>
@@ -131,8 +129,8 @@ namespace TinyMT
             return (int)(NextDouble() * range) + minValue;
         }
 
-        /// <summary>Returns a random 64bit unsigned integer</summary>
-        /// <returns>A random integer (0 &lt;= r &lt; 2^64).</returns>
+        /// <summary>Returns a random 64bit unsigned integer.</summary>
+        /// <returns>A random integer (0 &lt;= ret &lt; 2^64).</returns>
         /// <remarks>Corresponds to the original function tinymt64_generate_uint64.</remarks>
         public ulong NextUInt64()
         {
@@ -140,7 +138,7 @@ namespace TinyMT
             return temper();
         }
 
-        /// <summary>Fills the elements of a specified array of bytes with random numbers</summary>
+        /// <summary>Fills the elements of a specified array of bytes with random numbers.</summary>
         /// <param name="buffer">The array to be filled with random numbers.</param>
         /// <exception cref="ArgumentNullException"><paramref name="buffer" /> is null.</exception>
         /// <remarks>
@@ -157,7 +155,7 @@ namespace TinyMT
             NextBytes((Span<byte>)buffer);
         }
 
-        /// <summary>Fills the elements of a specified array of bytes with random numbers</summary>
+        /// <summary>Fills the elements of a specified array of bytes with random numbers.</summary>
         /// <param name="buffer">The array to be filled with random numbers.</param>
         /// <remarks>
         /// Each element of the array is set to a random value (0 &lt;= value &lt;= byte.MaxValue).
@@ -187,7 +185,7 @@ namespace TinyMT
         }
 
         /// <summary>Returns a random floating-point number that is greater than or equal to 0.0, and less than 1.0.</summary>
-        /// <returns>A double-precision floating point number (0.0 &lt;= r &lt; 1.0).</returns>
+        /// <returns>A double-precision floating point number (0.0 &lt;= ret &lt; 1.0).</returns>
         /// <remarks>Compatible with System.Random and corresponds to the original function tinymt64_generate_double.</remarks>
         public virtual double NextDouble()
         {
@@ -196,7 +194,7 @@ namespace TinyMT
         }
 
         /// <summary>Returns a random floating-point number that is greater than or equal to 0.0, and less than 1.0.</summary>
-        /// <returns>A double-precision floating point number (0.0 &lt;= r &lt; 1.0).</returns>
+        /// <returns>A double-precision floating point number (0.0 &lt;= ret &lt; 1.0).</returns>
         /// <remarks>Corresponds to the original function tinymt64_generate_double01.</remarks>
         public double NextDouble01()
         {
@@ -205,7 +203,7 @@ namespace TinyMT
         }
 
         /// <summary>Returns a random floating-point number that is greater than or equal to 1.0, and less than 2.0.</summary>
-        /// <returns>A double-precision floating point number (1.0 &lt;= r &lt; 2.0).</returns>
+        /// <returns>A double-precision floating point number (1.0 &lt;= ret &lt; 2.0).</returns>
         /// <remarks>Corresponds to the original function tinymt64_generate_double12.</remarks>
         public double NextDouble12()
         {
@@ -214,7 +212,7 @@ namespace TinyMT
         }
 
         /// <summary>Returns a random floating-point number that is greater than 0.0, and less than or equal to 1.0.</summary>
-        /// <returns>A double-precision floating point number (0.0 &lt; r &lt;= 1.0).</returns>
+        /// <returns>A double-precision floating point number (0.0 &lt; ret &lt;= 1.0).</returns>
         /// <remarks>Corresponds to the original function tinymt64_generate_doubleOC.</remarks>
         public double NextDoubleOC()
         {
@@ -223,7 +221,7 @@ namespace TinyMT
         }
 
         /// <summary>Returns a random floating-point number that is greater than 0.0, and less than 1.0.</summary>
-        /// <returns>A double-precision floating point number (0.0 &lt; r &lt; 1.0).</returns>
+        /// <returns>A double-precision floating point number (0.0 &lt; ret &lt; 1.0).</returns>
         /// <remarks>Corresponds to the original function tinymt64_generate_doubleOO.</remarks>
         public double NextDoubleOO()
         {
